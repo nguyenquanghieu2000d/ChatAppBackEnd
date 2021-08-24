@@ -5,7 +5,9 @@ package com.facenet.chatappwebservice.service;
 
 import com.facenet.chatappwebservice.entity.User;
 import com.facenet.chatappwebservice.error.NotFoundException;
+import com.facenet.chatappwebservice.model.dto.UserDto;
 import com.facenet.chatappwebservice.repository.UserRepository;
+import com.facenet.chatappwebservice.utilities.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,16 +19,33 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private ObjectMapperUtils mapper;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, ObjectMapperUtils mapper) {
+
         this.userRepository = userRepository;
+        this.mapper = mapper;
     }
 
+    /**
+     * Như tên hàm
+     * @return
+     */
     public List<User> getAllUsers() {
 
         List<User> user = userRepository.findAll();
         return user;
+    }
+
+    /**
+     * Như tên hàm
+     * @return
+     */
+    public UserDto getUserById(String username) {
+
+        User user = userRepository.getById(username);
+        return mapper.map(user, UserDto.class);
     }
 
 

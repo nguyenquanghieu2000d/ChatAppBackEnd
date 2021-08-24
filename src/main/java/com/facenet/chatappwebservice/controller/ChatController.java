@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@CrossOrigin(origins = AllowHost.host, allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(path = "api/chat")
 public class ChatController {
 
@@ -48,6 +48,8 @@ public class ChatController {
         LOGGER.info("Get all user");
         return new ResponseEntity<>(chatService.getAllMessageAndFileForm2User(user1, user2), HttpStatus.OK);
     }
+
+
 
     /**
      * Lấy message trong cơ sở dữ liệu dựa vào id

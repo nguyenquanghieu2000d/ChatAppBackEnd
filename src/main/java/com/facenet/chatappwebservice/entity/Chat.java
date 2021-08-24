@@ -3,12 +3,7 @@ Class được tạo bởi @author Nguyễn Quang Hiếu vào 23/07/2021 4:14 PM
 */
 package com.facenet.chatappwebservice.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
@@ -127,4 +122,5 @@ public class Chat {
     public void setFilesById(Collection<File> filesById) {
         this.filesById = filesById;
     }
+
 }

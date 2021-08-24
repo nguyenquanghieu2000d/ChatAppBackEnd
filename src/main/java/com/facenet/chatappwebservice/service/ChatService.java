@@ -9,20 +9,21 @@ import com.facenet.chatappwebservice.repository.ChatRepository;
 import com.facenet.chatappwebservice.utilities.ObjectMapperUtils;
 import lombok.Data;
 import lombok.Setter;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Data
 @Setter
 public class ChatService {
 
-    private ObjectMapperUtils mapper;
-
     private final ChatRepository chatRepository;
+    private ObjectMapperUtils mapper;
 
     @Autowired
     public ChatService(ChatRepository chatService, ObjectMapperUtils mapper) {
@@ -34,7 +35,12 @@ public class ChatService {
     public List<ChatDto> getAllMessageAndFileForm2User(String user1, String user2) {
 
         List<Chat> chatList = chatRepository.getChatFrom2User(user1, user2);
-        return mapper.mapAll(chatList, ChatDto.class);
+        System.out.println(chatList);
+        List<ChatDto> chatDtoList = mapper.mapAll(chatList, ChatDto.class);
+        chatDtoList.forEach(chat -> {
+            chat.setIsMyMessage(user1.equals(chat.getFromacc()));
+        });
+        return chatDtoList;
     }
 
     public List<Chat> getChat() {

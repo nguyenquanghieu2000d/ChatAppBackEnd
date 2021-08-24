@@ -8,6 +8,7 @@ import com.facenet.chatappwebservice.config.ListResponse;
 import com.facenet.chatappwebservice.config.Response;
 import com.facenet.chatappwebservice.entity.User;
 import com.facenet.chatappwebservice.error.NotFoundException;
+import com.facenet.chatappwebservice.model.dto.UserDto;
 import com.facenet.chatappwebservice.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = AllowHost.host, allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(path = "api/user")
 public class UserController {
 
@@ -54,7 +55,7 @@ public class UserController {
         LOGGER.info("Request login user: " + user.getUsername());
         if (userService.validateUser(user)) {
             LOGGER.info("User " + user.getUsername() + " - " + ListResponse.LOGIN_SUCCESS);
-            return new ResponseEntity<>(new Response(HttpStatus.OK,ListResponse.LOGIN_SUCCESS), HttpStatus.OK);
+            return new ResponseEntity<>(userService.getUserById(user.getUsername()), HttpStatus.OK);
         } else {
             LOGGER.info("User " + user.getUsername() + " - " + ListResponse.LOGIN_FAILED);
             throw new NotFoundException("Đăng nhập không thành công");
